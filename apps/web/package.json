@@ -1,28 +1,40 @@
 {
   "name": "web",
-  "version": "0.1.0",
-  "type": "module",
+  "version": "0.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "dev": "next dev --port 3000",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint --max-warnings 0",
-    "check-types": "next typegen && tsc --noEmit"
+    "dev": "vite",
+    "build": "run-p type-check \"build-only {@}\" --",
+    "preview": "vite preview",
+    "build-only": "vite build",
+    "type-check": "vue-tsc --build",
+    "lint": "eslint . --fix --cache",
+    "format": "prettier --write --experimental-cli src/"
   },
   "dependencies": {
-    "@repo/ui": "workspace:*",
-    "next": "16.1.0",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "pinia": "^3.0.4",
+    "vue": "^3.5.26",
+    "vue-router": "^4.6.4"
   },
   "devDependencies": {
-    "@repo/eslint-config": "workspace:*",
-    "@repo/typescript-config": "workspace:*",
-    "@types/node": "^22.15.3",
-    "@types/react": "19.2.2",
-    "@types/react-dom": "19.2.2",
-    "eslint": "^9.39.1",
-    "typescript": "5.9.2"
+    "@tsconfig/node24": "^24.0.4",
+    "@types/node": "^24.10.9",
+    "@vitejs/plugin-vue": "^6.0.3",
+    "@vue/eslint-config-typescript": "^14.6.0",
+    "@vue/tsconfig": "^0.8.1",
+    "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-vue": "~10.7.0",
+    "jiti": "^2.6.1",
+    "npm-run-all2": "^8.0.4",
+    "prettier": "3.8.1",
+    "typescript": "~5.9.3",
+    "vite": "^7.3.1",
+    "vite-plugin-vue-devtools": "^8.0.5",
+    "vue-tsc": "^3.2.2"
+  },
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
   }
 }
