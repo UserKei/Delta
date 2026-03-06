@@ -4,7 +4,7 @@
   "private": true,
   "license": "MIT",
   "exports": {
-    "./base.json": "./base.json"
+    "./index.json": "./index.json"
   },
   "publishConfig": {
     "access": "public"

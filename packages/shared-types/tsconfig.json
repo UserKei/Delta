@@ -1,7 +1,7 @@
 {
   // 1. 继承：引入远程或本地仓库中通用的基础配置（如：严格模式开关、目标版本等）
   // 这能保证团队内部多个项目的编译标准保持一致
-  "extends": "@repo/typescript-config/base.json",
+  "extends": "@repo/typescript-config/index.json",
 
   "compilerOptions": {
     // 2. 输出目录：编译后的 .js 文件存放的位置
