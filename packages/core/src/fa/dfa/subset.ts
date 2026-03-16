@@ -1,5 +1,5 @@
-import { EPSILON, FAEdge, FANode, FiniteAutomata } from '@repo/shared-types'
-import { createNode } from '../graph'
+import { EPSILON, FAEdge, FANode, FiniteAutomata, AutomatonType } from '@repo/shared-types'
+import { createNode, createEdge } from '../graph'
 
 // 核心 1: ε-closure 计算
 export function epsilonClosure(nfa: FiniteAutomata, stateIds: string[]): Set<string> {
@@ -60,5 +60,43 @@ export function subsetConstruction(nfa: FiniteAutomata): FiniteAutomata {
   const nfaEndIds = new Set(nfa.nodes.filter(n => n.isEnd).map(n => n.id))
   const isEnd = (set: Set<string>) => Array.from(set).some(id => nfaEndIds.has(id))
 
-  dfaNodes.push(createNode(q0Id, `{${getKey(q0)}}`))
+  dfaNodes.push(createNode(q0Id, `{${getKey(q0)}}`, true, isEnd(q0)))
+
+  let nextId = 1
+
+  while (workList.length > 0) {
+    const q = workList.shift()!
+    const qKey = getKey(q)
+    const u = dfaStateMap.get(qKey)!
+
+    for (const char of nfa.alphabet) {
+      // T = epsilonClosure(move(q, char))
+
+      const targetMove = move(nfa, Array.from(q), char)
+      const T = epsilonClosure(nfa, Array.from(targetMove))
+
+      if (T.size === 0) continue // 死状态通常省略
+
+      const tKey = getKey(T)
+      let v = dfaStateMap.get(tKey)
+
+      // 如果是新状态
+      if (!v) {
+        v = (nextId++).toString()
+        dfaStateMap.set(tKey, v)
+        workList.push(T)
+        dfaNodes.push(createNode(v, `{${tKey}}`, false, isEnd(T)))
+      }
+
+      // 加边 u -> v
+      dfaEdges.push(createEdge(u, v, char))
+    }
+  }
+
+  return {
+    type: AutomatonType.DFA,
+    nodes: dfaNodes,
+    edges: dfaEdges,
+    alphabet: nfa.alphabet,
+  }
 }
