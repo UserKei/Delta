@@ -1,7 +1,15 @@
 import { EPSILON, FAEdge, FANode, FiniteAutomata, AutomatonType } from '@repo/shared-types'
 import { createNode, createEdge } from '../graph'
 
-// 核心 1: ε-closure 计算
+/**
+ * Calculates the ε-closure (Epsilon Closure) of a given set of states.
+ *
+ * Finds all states reachable from the initial set of states by following only ε-edges.
+ *
+ * @param nfa - The Non-deterministic Finite Automaton (NFA) object
+ * @param stateIds - The initial set of state IDs
+ * @returns A new set of states containing the original set and all ε-reachable states
+ */
 export function epsilonClosure(nfa: FiniteAutomata, stateIds: string[]): Set<string> {
   const stack = [...stateIds]
   const closure = new Set(stateIds)
@@ -21,7 +29,14 @@ export function epsilonClosure(nfa: FiniteAutomata, stateIds: string[]): Set<str
   return closure
 }
 
-// 核心 2: Move 计算
+/**
+ * Calculates the set of states reachable from a given set of states on a specific input symbol.
+ *
+ * @param nfa - The Non-deterministic Finite Automaton (NFA) object
+ * @param stateIds - The current set of state IDs
+ * @param symbol - The input transition symbol
+ * @returns The set of target states reached after one transition on the given symbol
+ */
 export function move(nfa: FiniteAutomata, stateIds: string[], symbol: string): Set<string> {
   const result = new Set<string>()
   for (const u of stateIds) {
@@ -32,11 +47,25 @@ export function move(nfa: FiniteAutomata, stateIds: string[], symbol: string): S
   return result
 }
 
-// 辅助：集合转字符串 key (用于判重)
+/**
+ * Helper function: Converts a set of state IDs into a unique string key for comparison.
+ *
+ * @param set - The set of state IDs
+ * @returns A sorted and joined string key
+ */
 function getKey(set: Set<string>): string {
   return Array.from(set).sort().join(',')
 }
 
+/**
+ * Subset Construction algorithm.
+ *
+ * Converts a Non-deterministic Finite Automaton (NFA) into an equivalent Deterministic Finite Automaton (DFA).
+ * The algorithm builds DFA states by tracking the power set of NFA states.
+ *
+ * @param nfa - The NFA object to be converted
+ * @returns The equivalent DFA object
+ */
 export function subsetConstruction(nfa: FiniteAutomata): FiniteAutomata {
   const startNode = nfa.nodes.find(n => n.isStart)
   if (!startNode) throw new Error('NFA has no start node')
@@ -60,7 +89,7 @@ export function subsetConstruction(nfa: FiniteAutomata): FiniteAutomata {
   const nfaEndIds = new Set(nfa.nodes.filter(n => n.isEnd).map(n => n.id))
   const isEnd = (set: Set<string>) => Array.from(set).some(id => nfaEndIds.has(id))
 
-  dfaNodes.push(createNode(q0Id, `{${getKey(q0)}}`, true, isEnd(q0)))
+  dfaNodes.push(createNode({ id: q0Id, label: `{${getKey(q0)}}`, isStart: true, isEnd: isEnd(q0) }))
 
   let nextId = 1
 
@@ -85,7 +114,7 @@ export function subsetConstruction(nfa: FiniteAutomata): FiniteAutomata {
         v = (nextId++).toString()
         dfaStateMap.set(tKey, v)
         workList.push(T)
-        dfaNodes.push(createNode(v, `{${tKey}}`, false, isEnd(T)))
+        dfaNodes.push(createNode({ id: v, label: `{${tKey}}`, isStart: false, isEnd: isEnd(T) }))
       }
 
       // 加边 u -> v

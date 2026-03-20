@@ -2,6 +2,15 @@ import { FiniteAutomata, AutomatonType } from '@repo/shared-types'
 import { createNode, createEdge } from '../graph'
 import { groupBy, values } from 'lodash-es'
 
+/**
+ * Minimizes a Deterministic Finite Automaton (DFA) using Hopcroft's algorithm.
+ *
+ * It partitions the set of DFA states into disjoint subsets of equivalent states,
+ * merging them to produce an equivalent DFA with the minimum number of states.
+ *
+ * @param dfa - The DFA object to be minimized
+ * @returns The minimized equivalent DFA object
+ */
 export function minimizeDFA(dfa: FiniteAutomata): FiniteAutomata {
   // 1. 初始划分: 终态集 vs 非终态集
   // P = { {F}, {Q-F} }
@@ -58,7 +67,7 @@ export function minimizeDFA(dfa: FiniteAutomata): FiniteAutomata {
 
     // Label 显示合并前的状态 "{q0,q1}"
     const label = `{${group.sort().join(',')}}`
-    minNodes.push(createNode(newId, label, isStart, isEnd))
+    minNodes.push(createNode({ id: newId, label, isStart, isEnd }))
   })
 
   // 生成边 (只需看每组的第一个代表元素)

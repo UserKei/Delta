@@ -2,8 +2,14 @@ import { FiniteAutomata } from '@repo/shared-types'
 import { epsilonClosure, move } from '../dfa/subset'
 
 /**
- * 检查两个 NFA/DFA 是否等价
- * 返回: { equal: boolean, counterExample: string | null }
+ * Checks if two Finite Automata (NFA or DFA) are equivalent.
+ *
+ * Performs a synchronized Breadth-First Search (BFS) over the state spaces of both automata.
+ * If at any point one automaton reaches an accepting state while the other does not, they are not equivalent.
+ *
+ * @param fa1 - The first Finite Automaton
+ * @param fa2 - The second Finite Automaton
+ * @returns An object containing the result (equal) and a counter-example (counterExample) if not equivalent
  */
 export function checkEquivalence(fa1: FiniteAutomata, fa2: FiniteAutomata) {
   // 1. 提取所有符号
@@ -61,6 +67,12 @@ export function checkEquivalence(fa1: FiniteAutomata, fa2: FiniteAutomata) {
   return { equal: true, counterExample: null }
 }
 
+/**
+ * Helper function: Converts a set of state IDs into a unique string key.
+ *
+ * @param set - The set of state IDs
+ * @returns A sorted and joined string key
+ */
 function getKey(set: Set<string>): string {
   return Array.from(set).sort().join(',')
 }

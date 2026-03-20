@@ -1,6 +1,18 @@
 import { FiniteAutomata, AutomatonType, EPSILON } from '@repo/shared-types'
 import { createNode, createEdge } from './graph'
 
+/**
+ * Parses an Edge List text to generate a Finite Automaton object.
+ *
+ * Supported text formats:
+ * - `S <id>` or `start <id>`: Defines the start state
+ * - `E <id>` or `end <id>`: Defines an accepting/final state
+ * - `<source> <target> <label>`: Defines a state transition edge (use `@` for ε edges)
+ * - Lines starting with `#` are comments
+ *
+ * @param input - The text string containing the automaton definition
+ * @returns The generated Non-deterministic Finite Automaton (NFA) object
+ */
 export function parseEdgeList(input: string): FiniteAutomata {
   const lines = input.split('\n')
   const nodesMap = new Map<string, any>()
@@ -38,7 +50,7 @@ export function parseEdgeList(input: string): FiniteAutomata {
   }
 
   const nodes = Array.from(nodesMap.keys()).map(id =>
-    createNode(id, id, startNodes.has(id), endNodes.has(id)),
+    createNode({ id, label: id, isStart: startNodes.has(id), isEnd: endNodes.has(id) }),
   )
 
   return {

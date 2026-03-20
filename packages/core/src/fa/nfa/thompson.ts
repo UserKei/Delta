@@ -9,6 +9,15 @@ interface Fragment {
   edges: FAEdge[]
 }
 
+/**
+ * Thompson's Construction Algorithm.
+ *
+ * Converts a regular expression into a Non-deterministic Finite Automaton (NFA).
+ * The algorithm builds and combines basic NFA fragments based on the postfix expression.
+ *
+ * @param regex - The input regular expression string
+ * @returns The constructed equivalent NFA object
+ */
 export function thompson(regex: string): FiniteAutomata {
   const postfix = toPostfix(regex)
   const stack: Fragment[] = []
@@ -36,8 +45,8 @@ export function thompson(regex: string): FiniteAutomata {
       const f2 = stack.pop()!
       const f1 = stack.pop()!
       // undefined 占位符号 id = uuid()
-      const s = createNode(undefined, 'start', true, false)
-      const e = createNode(undefined, 'end', false, true)
+      const s = createNode({ label: 'start', isStart: true, isEnd: false })
+      const e = createNode({ label: 'end', isStart: false, isEnd: true })
 
       // s -> f1.start, s -> f2.start
       // f1.end -> e, f2.end -> e
@@ -61,8 +70,8 @@ export function thompson(regex: string): FiniteAutomata {
       })
     } else if (char === '*') {
       const f = stack.pop()!
-      const s = createNode(undefined, 'start', true, false)
-      const e = createNode(undefined, 'end', false, true)
+      const s = createNode({ label: 'start', isStart: true, isEnd: false })
+      const e = createNode({ label: 'end', isStart: false, isEnd: true })
 
       // s -> f.start, f.end -> e (进入和离开)
       // f.end -> f.start (循环)
@@ -85,8 +94,8 @@ export function thompson(regex: string): FiniteAutomata {
       })
     } else {
       // 基础字符 a
-      const s = createNode(undefined, 's', true, false)
-      const e = createNode(undefined, 'e', false, true)
+      const s = createNode({ label: 's', isStart: true, isEnd: false })
+      const e = createNode({ label: 'e', isStart: false, isEnd: true })
       const edge = createEdge(s.id, e.id, char === '@' ? EPSILON : char)
 
       stack.push({

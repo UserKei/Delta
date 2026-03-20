@@ -1,5 +1,11 @@
 const PRECEDENCE: Record<string, number> = { '|': 1, '.': 2, '*': 3 }
 
+/**
+ * Determines if a character is a regular operand (i.e., not a regex control character).
+ *
+ * @param char - The character to check
+ * @returns true if the character is not one of `(`, `)`, `*`, `|`, `.`
+ */
 function isOperand(char: string): boolean {
   return !['(', ')', '*', '|', '.'].includes(char)
 }
