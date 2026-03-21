@@ -41,3 +41,54 @@ export interface FiniteAutomata {
   edges: FAEdge[] // 边集合
   alphabet: string[] // 字母表 (该自动机支持的所有输入符号)
 }
+
+export enum FATaskType {
+  GRAPH_STRUCTURE = 'GRAPH_STRUCTURE',
+  MATRIX_CONTENT = 'MATRIX_CONTENT',
+  GRAPH_ISOMORPHISM = 'GRAPH_ISOMORPHISM',
+  PARTITION_CHECK = 'PARTITION_CHECK',
+  CANONICAL_ISOMORPHISM = 'CANONICAL_ISOMORPHISM',
+}
+
+export interface FASubsetTableRow {
+  state: string[]
+  isStart: boolean
+  isEnd: boolean
+  transitions: Record<string, string[]>
+}
+
+export interface FASubsetTableAnswer {
+  nfa: FiniteAutomata
+  rows: FASubsetTableRow[]
+}
+
+export interface FAPartitionAnswer {
+  dfa: FiniteAutomata
+  partitions: string[][]
+}
+
+export interface FAJudgeAnswerMap {
+  [FATaskType.GRAPH_STRUCTURE]: FiniteAutomata
+  [FATaskType.MATRIX_CONTENT]: FASubsetTableAnswer
+  [FATaskType.GRAPH_ISOMORPHISM]: FiniteAutomata
+  [FATaskType.PARTITION_CHECK]: FAPartitionAnswer
+  [FATaskType.CANONICAL_ISOMORPHISM]: FiniteAutomata
+}
+
+export interface FAJudgeRequestBase {
+  targetRegex: string
+}
+
+export type FAJudgeRequest<T extends FATaskType = FATaskType> = {
+  [K in T]: FAJudgeRequestBase & {
+    taskType: K
+    answer: FAJudgeAnswerMap[K]
+  }
+}[T]
+
+export interface FAJudgeResult {
+  pass: boolean
+  reasonCode: string
+  message: string
+  diagnostics?: Record<string, unknown>
+}
