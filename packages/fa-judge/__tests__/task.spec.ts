@@ -5,6 +5,31 @@ import { evaluateFATask } from '@/task'
 import { buildExpectedSubsetRows } from '@/task-utils'
 
 describe('FA Task Judge', () => {
+  it('passes string equivalence checks for equivalent regexes', () => {
+    const result = evaluateFATask({
+      taskType: FATaskType.STRING_EQUIVALENCE,
+      targetRegex: '(a|b)*.a',
+      answer: {
+        regex: '((a|b)*).a',
+      },
+    })
+
+    expect(result.pass).toBe(true)
+  })
+
+  it('fails string equivalence checks for non-equivalent regexes', () => {
+    const result = evaluateFATask({
+      taskType: FATaskType.STRING_EQUIVALENCE,
+      targetRegex: 'a',
+      answer: {
+        regex: 'b',
+      },
+    })
+
+    expect(result.pass).toBe(false)
+    expect(result.reasonCode).toBe('LANGUAGE_MISMATCH')
+  })
+
   it('passes graph structure checks for a Thompson NFA', () => {
     const nfa = thompson('a|b')
     const result = evaluateFATask({

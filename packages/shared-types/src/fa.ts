@@ -43,11 +43,16 @@ export interface FiniteAutomata {
 }
 
 export enum FATaskType {
+  STRING_EQUIVALENCE = 'STRING_EQUIVALENCE',
   GRAPH_STRUCTURE = 'GRAPH_STRUCTURE',
   MATRIX_CONTENT = 'MATRIX_CONTENT',
   GRAPH_ISOMORPHISM = 'GRAPH_ISOMORPHISM',
   PARTITION_CHECK = 'PARTITION_CHECK',
   CANONICAL_ISOMORPHISM = 'CANONICAL_ISOMORPHISM',
+}
+
+export interface FAStringEquivalenceAnswer {
+  regex: string
 }
 
 export interface FASubsetTableRow {
@@ -68,6 +73,7 @@ export interface FAPartitionAnswer {
 }
 
 export interface FAJudgeAnswerMap {
+  [FATaskType.STRING_EQUIVALENCE]: FAStringEquivalenceAnswer
   [FATaskType.GRAPH_STRUCTURE]: FiniteAutomata
   [FATaskType.MATRIX_CONTENT]: FASubsetTableAnswer
   [FATaskType.GRAPH_ISOMORPHISM]: FiniteAutomata

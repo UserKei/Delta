@@ -25,6 +25,8 @@ export function evaluateFATask(request: FAJudgeRequest): FAJudgeResult {
   }
 
   switch (request.taskType) {
+    case FATaskType.STRING_EQUIVALENCE:
+      return checkStringEquivalence(request.targetRegex, request.answer.regex)
     case FATaskType.GRAPH_STRUCTURE:
       return checkGraphStructure(request.targetRegex, request.answer)
     case FATaskType.MATRIX_CONTENT:
@@ -36,6 +38,25 @@ export function evaluateFATask(request: FAJudgeRequest): FAJudgeResult {
     case FATaskType.CANONICAL_ISOMORPHISM:
       return checkCanonicalMinDfa(request.targetRegex, request.answer)
   }
+}
+
+export function checkStringEquivalence(targetRegex: string, answerRegex: string): FAJudgeResult {
+  const answerValidation = validateRegex(answerRegex)
+  if (!answerValidation.valid) {
+    return fail('INVALID_ANSWER_REGEX', answerValidation.message ?? 'Invalid answer regex')
+  }
+
+  const targetAutomaton = subsetConstruction(thompson(targetRegex))
+  const answerAutomaton = subsetConstruction(thompson(answerRegex))
+  const equivalence = checkEquivalence(targetAutomaton, answerAutomaton)
+
+  if (!equivalence.equal) {
+    return fail('LANGUAGE_MISMATCH', 'Submitted regex is not equivalent to the target regex', {
+      counterExample: equivalence.counterExample,
+    })
+  }
+
+  return pass('Regex is language-equivalent to the target regex')
 }
 
 export function checkGraphStructure(targetRegex: string, answer: FiniteAutomata): FAJudgeResult {

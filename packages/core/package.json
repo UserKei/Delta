@@ -1,26 +1,29 @@
 {
   "name": "@repo/core",
   "type": "module",
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js"
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
     },
     "./fa": {
       "types": "./dist/fa/index.d.ts",
-      "import": "./dist/fa/index.mjs"
+      "import": "./dist/fa/index.js",
+      "require": "./dist/fa/index.cjs"
     },
     "./ll1": {
       "types": "./dist/ll1/index.d.ts",
-      "import": "./dist/ll1/index.mjs"
+      "import": "./dist/ll1/index.js",
+      "require": "./dist/ll1/index.cjs"
     },
     "./lr": {
       "types": "./dist/lr/index.d.ts",
-      "import": "./dist/lr/index.mjs"
+      "import": "./dist/lr/index.js",
+      "require": "./dist/lr/index.cjs"
     }
   },
   "scripts": {
