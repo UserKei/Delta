@@ -1,4 +1,5 @@
-import { FAJudgeRequest, FAJudgeResult, FATaskType, FiniteAutomata } from '@repo/shared-types'
+import { FATaskType } from '@repo/shared-types'
+import type { FAJudgeRequest, FAJudgeResult, FiniteAutomata } from '@repo/shared-types'
 import {
   buildHopcroftPartitions,
   checkEquivalence,

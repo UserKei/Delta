@@ -1,5 +1,5 @@
 import axios, { type AxiosInstance } from 'axios'
-import { evaluateFATask } from '@repo/fa-judge'
+import { evaluateFATask } from '@repo/fa-service'
 import {
   FATaskType,
   type FAPartitionAnswer,

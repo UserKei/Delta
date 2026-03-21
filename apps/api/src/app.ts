@@ -12,7 +12,7 @@ import {
   isPartitionAnswerLike,
   isSubsetTableAnswerLike,
   validateRegex,
-} from '@repo/fa-judge'
+} from '@repo/fa-service'
 
 export const app = new Elysia()
   .get('/', () => 'FA judge API')
@@ -46,6 +46,12 @@ function isFAJudgeRequestBody(value: unknown): value is FAJudgeRequest {
   if (!isTaskType(candidate.taskType) || typeof candidate.targetRegex !== 'string') return false
 
   switch (candidate.taskType) {
+    case FATaskType.STRING_EQUIVALENCE:
+      return (
+        !!candidate.answer &&
+        typeof candidate.answer === 'object' &&
+        typeof (candidate.answer as { regex?: unknown }).regex === 'string'
+      )
     case FATaskType.GRAPH_STRUCTURE:
     case FATaskType.GRAPH_ISOMORPHISM:
     case FATaskType.CANONICAL_ISOMORPHISM:

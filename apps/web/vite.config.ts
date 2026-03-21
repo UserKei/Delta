@@ -11,14 +11,14 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
-      '@repo/fa-judge': fileURLToPath(
-        new URL('../../packages/fa-judge/dist/index.js', import.meta.url),
+      '@repo/fa-service': fileURLToPath(
+        new URL('../../packages/fa-service/dist/index.js', import.meta.url),
       ),
-      '@repo/ll1-judge': fileURLToPath(
-        new URL('../../packages/ll1-judge/dist/index.js', import.meta.url),
+      '@repo/ll1-service': fileURLToPath(
+        new URL('../../packages/ll1-service/dist/index.js', import.meta.url),
       ),
-      '@repo/lr-judge': fileURLToPath(
-        new URL('../../packages/lr-judge/dist/index.js', import.meta.url),
+      '@repo/lr-service': fileURLToPath(
+        new URL('../../packages/lr-service/dist/index.js', import.meta.url),
       ),
       '@repo/shared-types': fileURLToPath(
         new URL('../../packages/shared-types/dist/index.js', import.meta.url),

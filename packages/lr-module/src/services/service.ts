@@ -1,5 +1,5 @@
 import axios, { type AxiosInstance } from 'axios'
-import { evaluateLRTask } from '@repo/lr-judge'
+import { evaluateLRTask } from '@repo/lr-service'
 import {
   LRMode,
   type Grammar,

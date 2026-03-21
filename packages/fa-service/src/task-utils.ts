@@ -1,5 +1,5 @@
-import {
-  EPSILON,
+import { EPSILON } from '@repo/shared-types'
+import type {
   FAEdge,
   FANode,
   FAPartitionAnswer,
@@ -112,11 +112,13 @@ export function areAutomataIsomorphic(left: FiniteAutomata, right: FiniteAutomat
 
   if (leftStarts.length === 1) {
     const leftStart = leftStarts[0]
+    if (!leftStart) return false
     const signature = leftSignatures.get(leftStart.id)!
     const candidates = nodesBySignature.get(signature) ?? []
-    if (candidates.length !== 1 || !candidates[0].isStart) return false
-    mapping.set(leftStart.id, candidates[0].id)
-    usedRightIds.add(candidates[0].id)
+    const [rightStart] = candidates
+    if (candidates.length !== 1 || !rightStart?.isStart) return false
+    mapping.set(leftStart.id, rightStart.id)
+    usedRightIds.add(rightStart.id)
   }
 
   return backtrackIsomorphism(
@@ -409,6 +411,7 @@ function edgeCountsMatch(
 ): boolean {
   for (const [pairKey, count] of leftIndex.edgeCountByPair) {
     const [source, target, label] = pairKey.split('|')
+    if (!source || !target || label === undefined) return false
     const mappedSource = mapping.get(source)
     const mappedTarget = mapping.get(target)
     if (!mappedSource || !mappedTarget) return false

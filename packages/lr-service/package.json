@@ -1,5 +1,5 @@
 {
-  "name": "@repo/ll1-judge",
+  "name": "@repo/lr-service",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",

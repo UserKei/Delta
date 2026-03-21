@@ -20,7 +20,7 @@
       "name": "api",
       "version": "1.0.50",
       "dependencies": {
-        "@repo/fa-judge": "workspace:*",
+        "@repo/fa-service": "workspace:*",
         "@repo/shared-types": "workspace:*",
         "elysia": "latest",
       },
@@ -33,10 +33,12 @@
       "name": "web",
       "version": "0.0.0",
       "dependencies": {
-        "@repo/fa-judge": "workspace:*",
         "@repo/fa-module": "workspace:*",
+        "@repo/fa-service": "workspace:*",
         "@repo/ll1-module": "workspace:*",
+        "@repo/ll1-service": "workspace:*",
         "@repo/lr-module": "workspace:*",
+        "@repo/lr-service": "workspace:*",
         "@repo/shared-types": "workspace:*",
         "axios": "^1.13.2",
         "cytoscape": "^3.33.1",
@@ -103,26 +105,11 @@
         "typescript-eslint": "^8.50.0",
       },
     },
-    "packages/fa-judge": {
-      "name": "@repo/fa-judge",
-      "dependencies": {
-        "@repo/core": "workspace:*",
-        "@repo/shared-types": "workspace:*",
-      },
-      "devDependencies": {
-        "@types/bun": "latest",
-        "bun-types": "^1.3.8",
-        "tsup": "^8.5.1",
-      },
-      "peerDependencies": {
-        "typescript": "^5.9.3",
-      },
-    },
     "packages/fa-module": {
       "name": "@repo/fa-module",
       "dependencies": {
         "@repo/core": "workspace:*",
-        "@repo/fa-judge": "workspace:*",
+        "@repo/fa-service": "workspace:*",
         "@repo/shared-types": "workspace:*",
         "axios": "^1.13.2",
         "cytoscape": "^3.33.1",
@@ -134,8 +121,8 @@
         "vue-tsc": "^3.2.4",
       },
     },
-    "packages/ll1-judge": {
-      "name": "@repo/ll1-judge",
+    "packages/fa-service": {
+      "name": "@repo/fa-service",
       "dependencies": {
         "@repo/core": "workspace:*",
         "@repo/shared-types": "workspace:*",
@@ -153,7 +140,7 @@
       "name": "@repo/ll1-module",
       "dependencies": {
         "@repo/core": "workspace:*",
-        "@repo/ll1-judge": "workspace:*",
+        "@repo/ll1-service": "workspace:*",
         "@repo/shared-types": "workspace:*",
         "axios": "^1.13.2",
         "vue": "^3.5.27",
@@ -163,8 +150,8 @@
         "vue-tsc": "^3.2.4",
       },
     },
-    "packages/lr-judge": {
-      "name": "@repo/lr-judge",
+    "packages/ll1-service": {
+      "name": "@repo/ll1-service",
       "dependencies": {
         "@repo/core": "workspace:*",
         "@repo/shared-types": "workspace:*",
@@ -182,7 +169,7 @@
       "name": "@repo/lr-module",
       "dependencies": {
         "@repo/core": "workspace:*",
-        "@repo/lr-judge": "workspace:*",
+        "@repo/lr-service": "workspace:*",
         "@repo/shared-types": "workspace:*",
         "axios": "^1.13.2",
         "vue": "^3.5.27",
@@ -190,6 +177,21 @@
       "devDependencies": {
         "typescript": "^5.9.3",
         "vue-tsc": "^3.2.4",
+      },
+    },
+    "packages/lr-service": {
+      "name": "@repo/lr-service",
+      "dependencies": {
+        "@repo/core": "workspace:*",
+        "@repo/shared-types": "workspace:*",
+      },
+      "devDependencies": {
+        "@types/bun": "latest",
+        "bun-types": "^1.3.8",
+        "tsup": "^8.5.1",
+      },
+      "peerDependencies": {
+        "typescript": "^5.9.3",
       },
     },
     "packages/shared-types": {
@@ -435,17 +437,17 @@
 
     "@repo/eslint-config": ["@repo/eslint-config@workspace:packages/eslint-config"],
 
-    "@repo/fa-judge": ["@repo/fa-judge@workspace:packages/fa-judge"],
-
     "@repo/fa-module": ["@repo/fa-module@workspace:packages/fa-module"],
 
-    "@repo/ll1-judge": ["@repo/ll1-judge@workspace:packages/ll1-judge"],
+    "@repo/fa-service": ["@repo/fa-service@workspace:packages/fa-service"],
 
     "@repo/ll1-module": ["@repo/ll1-module@workspace:packages/ll1-module"],
 
-    "@repo/lr-judge": ["@repo/lr-judge@workspace:packages/lr-judge"],
+    "@repo/ll1-service": ["@repo/ll1-service@workspace:packages/ll1-service"],
 
     "@repo/lr-module": ["@repo/lr-module@workspace:packages/lr-module"],
+
+    "@repo/lr-service": ["@repo/lr-service@workspace:packages/lr-service"],
 
     "@repo/shared-types": ["@repo/shared-types@workspace:packages/shared-types"],
 
@@ -1407,11 +1409,11 @@
 
     "@repo/core/bun-types": ["bun-types@1.3.11", "", { "dependencies": { "@types/node": "*" } }, "sha512-1KGPpoxQWl9f6wcZh57LvrPIInQMn2TQ7jsgxqpRzg+l0QPOFvJVH7HmvHo/AiPgwXy+/Thf6Ov3EdVn1vOabg=="],
 
-    "@repo/fa-judge/bun-types": ["bun-types@1.3.11", "", { "dependencies": { "@types/node": "*" } }, "sha512-1KGPpoxQWl9f6wcZh57LvrPIInQMn2TQ7jsgxqpRzg+l0QPOFvJVH7HmvHo/AiPgwXy+/Thf6Ov3EdVn1vOabg=="],
+    "@repo/fa-service/bun-types": ["bun-types@1.3.11", "", { "dependencies": { "@types/node": "*" } }, "sha512-1KGPpoxQWl9f6wcZh57LvrPIInQMn2TQ7jsgxqpRzg+l0QPOFvJVH7HmvHo/AiPgwXy+/Thf6Ov3EdVn1vOabg=="],
 
-    "@repo/ll1-judge/bun-types": ["bun-types@1.3.11", "", { "dependencies": { "@types/node": "*" } }, "sha512-1KGPpoxQWl9f6wcZh57LvrPIInQMn2TQ7jsgxqpRzg+l0QPOFvJVH7HmvHo/AiPgwXy+/Thf6Ov3EdVn1vOabg=="],
+    "@repo/ll1-service/bun-types": ["bun-types@1.3.11", "", { "dependencies": { "@types/node": "*" } }, "sha512-1KGPpoxQWl9f6wcZh57LvrPIInQMn2TQ7jsgxqpRzg+l0QPOFvJVH7HmvHo/AiPgwXy+/Thf6Ov3EdVn1vOabg=="],
 
-    "@repo/lr-judge/bun-types": ["bun-types@1.3.11", "", { "dependencies": { "@types/node": "*" } }, "sha512-1KGPpoxQWl9f6wcZh57LvrPIInQMn2TQ7jsgxqpRzg+l0QPOFvJVH7HmvHo/AiPgwXy+/Thf6Ov3EdVn1vOabg=="],
+    "@repo/lr-service/bun-types": ["bun-types@1.3.11", "", { "dependencies": { "@types/node": "*" } }, "sha512-1KGPpoxQWl9f6wcZh57LvrPIInQMn2TQ7jsgxqpRzg+l0QPOFvJVH7HmvHo/AiPgwXy+/Thf6Ov3EdVn1vOabg=="],
 
     "@tailwindcss/oxide-wasm32-wasi/@emnapi/core": ["@emnapi/core@1.9.1", "", { "dependencies": { "@emnapi/wasi-threads": "1.2.0", "tslib": "^2.4.0" }, "bundled": true }, "sha512-mukuNALVsoix/w1BJwFzwXBN/dHeejQtuVzcDsfOEsdpCumXb/E9j8w11h5S54tT1xhifGfbbSm/ICrObRb3KA=="],
 
@@ -1440,6 +1442,8 @@
     "@vue/devtools-api/@vue/devtools-kit": ["@vue/devtools-kit@7.7.9", "", { "dependencies": { "@vue/devtools-shared": "^7.7.9", "birpc": "^2.3.0", "hookable": "^5.5.3", "mitt": "^3.0.1", "perfect-debounce": "^1.0.0", "speakingurl": "^14.0.1", "superjson": "^2.2.2" } }, "sha512-PyQ6odHSgiDVd4hnTP+aDk2X4gl2HmLDfiyEnn3/oV+ckFDuswRs4IbBT7vacMuGdwY/XemxBoh302ctbsptuA=="],
 
     "@vue/devtools-core/nanoid": ["nanoid@5.1.6", "", { "bin": { "nanoid": "bin/nanoid.js" } }, "sha512-c7+7RQ+dMB5dPwwCp4ee1/iV/q2P6aK1mTZcfr1BTuVlyW9hJYiMPybJCcnBlQtuSmTIWNeazm/zqNoZSSElBg=="],
+
+    "api/bun-types": ["bun-types@1.3.11", "", { "dependencies": { "@types/node": "*" } }, "sha512-1KGPpoxQWl9f6wcZh57LvrPIInQMn2TQ7jsgxqpRzg+l0QPOFvJVH7HmvHo/AiPgwXy+/Thf6Ov3EdVn1vOabg=="],
 
     "chalk/ansi-styles": ["ansi-styles@4.3.0", "", { "dependencies": { "color-convert": "^2.0.1" } }, "sha512-zbB9rCJAT1rbjiVDb2hqKFHNYLxgtk8NURxZ3IZwD3F6NtxbXZQCnnSi1Lkx+IDohdPlFp222wVALIheZJQSEg=="],
 

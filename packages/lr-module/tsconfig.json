@@ -17,7 +17,7 @@
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "paths": {
       "@repo/core": ["../core/dist/index.d.ts"],
-      "@repo/lr-judge": ["../lr-judge/dist/index.d.ts"],
+      "@repo/lr-service": ["../lr-service/src/index.ts"],
       "@repo/shared-types": ["../shared-types/dist/index.d.ts"]
     }
   }

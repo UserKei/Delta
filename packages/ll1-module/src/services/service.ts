@@ -1,5 +1,5 @@
 import axios, { type AxiosInstance } from 'axios'
-import { evaluateLL1Task } from '@repo/ll1-judge'
+import { evaluateLL1Task } from '@repo/ll1-service'
 import {
   type Grammar,
   type GrammarSet,

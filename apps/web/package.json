@@ -18,8 +18,10 @@
   },
   "dependencies": {
     "@repo/fa-module": "workspace:*",
-    "@repo/fa-judge": "workspace:*",
+    "@repo/fa-service": "workspace:*",
+    "@repo/ll1-service": "workspace:*",
     "@repo/ll1-module": "workspace:*",
+    "@repo/lr-service": "workspace:*",
     "@repo/lr-module": "workspace:*",
     "@repo/shared-types": "workspace:*",
     "axios": "^1.13.2",
