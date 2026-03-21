@@ -33,17 +33,42 @@ describe('Left Recursion Elimination', () => {
     const grammar: Grammar = {
       startSymbol: 'S',
       nonTerminals: ['S', 'A'],
-      terminals: ['a', 'b'],
+      terminals: ['a', 'b', 'c'],
       productions: [
         { left: 'S', right: ['A', 'a'] },
         { left: 'S', right: ['b'] },
         { left: 'A', right: ['S', 'b'] },
+        { left: 'A', right: ['c'] },
       ],
     }
     const result = eliminateLeftRecursion(grammar)
 
-    // A -> Sb => A -> Aab | bb
+    // A -> Sb | c => A -> Aab | bb | c
     // Expect A_prime to handle direct recursion on A
     expect(result.nonTerminals).toContain("A'")
+    const aProds = result.productions.filter(p => p.left === 'A')
+    expect(aProds).toContainEqual({ left: 'A', right: ['b', 'b', "A'"] })
+    expect(aProds).toContainEqual({ left: 'A', right: ['c', "A'"] })
+  })
+
+  it('should handle non-terminal with only direct left recursion', () => {
+    const grammar: Grammar = {
+      startSymbol: 'S',
+      nonTerminals: ['S'],
+      terminals: ['a'],
+      productions: [{ left: 'S', right: ['S', 'a'] }],
+    }
+    const result = eliminateLeftRecursion(grammar)
+
+    expect(result.nonTerminals).toContain("S'")
+    const sProds = result.productions.filter(p => p.left === 'S')
+    const sPrimeProds = result.productions.filter(p => p.left === "S'")
+
+    expect(sProds).toHaveLength(1)
+    expect(sProds[0].right).toEqual(["S'"])
+
+    expect(sPrimeProds).toHaveLength(2)
+    expect(sPrimeProds).toContainEqual({ left: "S'", right: ['a', "S'"] })
+    expect(sPrimeProds).toContainEqual({ left: "S'", right: [EPSILON] })
   })
 })

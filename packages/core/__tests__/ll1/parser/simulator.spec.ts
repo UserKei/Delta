@@ -40,4 +40,35 @@ describe('LL(1) Parser Simulator', () => {
     const lastStep = steps[steps.length - 1]
     expect(lastStep.action).toContain('Error:')
   })
+
+  it('should report error for terminal mismatch', () => {
+    const customGrammar: Grammar = {
+      startSymbol: 'S',
+      nonTerminals: ['S'],
+      terminals: ['a', 'b', 'c'],
+      productions: [{ left: 'S', right: ['a', 'b'] }],
+    }
+    const first = computeFirst(customGrammar)
+    const follow = computeFollow(customGrammar, first)
+    const table = buildLL1Table(customGrammar, first, follow)
+
+    const steps = simulateLL1(table, customGrammar.startSymbol, 'a c')
+    const errorStep = steps.find(s => s.action.includes('Error:'))
+    expect(errorStep).toBeDefined()
+    expect(errorStep!.action).toBe('Error: Expected b, got c')
+  })
+
+  it('should handle epsilon productions correctly', () => {
+    const first = computeFirst(grammar)
+    const follow = computeFollow(grammar, first)
+    const table = buildLL1Table(grammar, first, follow)
+
+    // Using input 'a' to force the use of A -> ε (since Follow(A) contains EOF)
+    const steps = simulateLL1(table, grammar.startSymbol, 'a')
+
+    // Find the step where A -> ε is output
+    const epsStep = steps.find(s => s.action === 'Output A -> ε')
+    expect(epsStep).toBeDefined()
+    expect(epsStep!.pushSymbols).toEqual([EPSILON])
+  })
 })

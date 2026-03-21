@@ -40,5 +40,34 @@ describe('First Set Computation', () => {
     const seq2 = computeSequenceFirst(['A', 'c'], firstSets, terminals)
     expect(seq2).toContain('a')
     expect(seq2).toContain('c')
+
+    const firstSetsWithEpsilon = {
+      A: ['a', EPSILON],
+      B: ['b', EPSILON],
+    }
+    const seq3 = computeSequenceFirst(['A', 'B'], firstSetsWithEpsilon, terminals)
+    expect(seq3).toContain('a')
+    expect(seq3).toContain('b')
+    expect(seq3).toContain(EPSILON)
+  })
+
+  it('should compute first sets correctly when RHS derives epsilon', () => {
+    const grammar: Grammar = {
+      startSymbol: 'S',
+      nonTerminals: ['S', 'A', 'B'],
+      terminals: ['a', 'b'],
+      productions: [
+        { left: 'S', right: ['A', 'B'] },
+        { left: 'A', right: ['a'] },
+        { left: 'A', right: [EPSILON] },
+        { left: 'B', right: ['b'] },
+        { left: 'B', right: [EPSILON] },
+      ],
+    }
+
+    const first = computeFirst(grammar)
+    expect(first['S']).toContain('a')
+    expect(first['S']).toContain('b')
+    expect(first['S']).toContain(EPSILON)
   })
 })

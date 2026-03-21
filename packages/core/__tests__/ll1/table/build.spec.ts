@@ -52,4 +52,22 @@ describe('LL(1) Table Construction', () => {
 
     expect(() => buildLL1Table(grammar, first, follow)).toThrow('LL(1) Conflict on [S, a]')
   })
+
+  it('should throw on LL(1) conflict involving epsilon', () => {
+    const grammar: Grammar = {
+      startSymbol: 'S',
+      nonTerminals: ['S', 'A'],
+      terminals: ['a'],
+      productions: [
+        { left: 'S', right: ['A', 'a'] },
+        { left: 'A', right: ['a'] },
+        { left: 'A', right: [EPSILON] },
+      ],
+    }
+
+    const first = computeFirst(grammar)
+    const follow = computeFollow(grammar, first)
+
+    expect(() => buildLL1Table(grammar, first, follow)).toThrow('LL(1) Conflict on [A, a]')
+  })
 })
