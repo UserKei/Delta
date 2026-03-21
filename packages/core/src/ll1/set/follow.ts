@@ -1,5 +1,4 @@
-import { Grammar, GrammarSet } from '@repo/shared-types'
-import { EPSILON, EOF } from '../types'
+import { EOF, EPSILON, Grammar, GrammarSet } from '@repo/shared-types'
 import { computeSequenceFirst } from './first'
 
 /**
@@ -25,7 +24,7 @@ export function computeFollow(grammar: Grammar, first: GrammarSet): GrammarSet {
         const B = rhs[i]
         if (grammar.terminals.includes(B) || B === EPSILON) continue
 
-        // 规则 2: A -> α B β, First(β)-{ε} 加入 Follow(B)
+        // 规则 2: A -> α B β, First(β)-{@} 加入 Follow(B)
         const beta = rhs.slice(i + 1)
         const firstBeta = computeSequenceFirst(beta, first, grammar.terminals)
 
@@ -36,7 +35,7 @@ export function computeFollow(grammar: Grammar, first: GrammarSet): GrammarSet {
           }
         }
 
-        // 规则 3: A -> α B 或 A -> α B β 且 First(β) 含 ε
+        // 规则 3: A -> α B 或 A -> α B β 且 First(β) 含 @
         // Follow(A) 加入 Follow(B)
         if (beta.length === 0 || firstBeta.includes(EPSILON)) {
           for (const f of follow[A]) {

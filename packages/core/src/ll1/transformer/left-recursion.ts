@@ -1,6 +1,5 @@
-import { Grammar, Production } from '@repo/shared-types'
+import { EPSILON, Grammar, Production } from '@repo/shared-types'
 import { cloneDeep } from 'lodash-es'
-import { EPSILON } from '../types'
 
 /**
  * Eliminates both direct and indirect left recursion from a given grammar using Paull's Algorithm.
@@ -72,7 +71,7 @@ function eliminateDirectLeftRecursion(G: Grammar, A: string) {
     newAProds.push({ left: A, right: [A_prime] })
   }
 
-  // 新产生式: A' -> α A' | ε
+  // 新产生式: A' -> α A' | @
   const newPrimeProds = leftRecursive.map(p => ({
     left: A_prime,
     right: [...p.right.slice(1), A_prime], // 去掉开头的 A

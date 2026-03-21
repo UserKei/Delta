@@ -1,6 +1,5 @@
-import { Grammar, GrammarSet, LL1Table } from '@repo/shared-types'
+import { EOF, EPSILON, Grammar, GrammarSet, LL1Table } from '@repo/shared-types'
 import { computeSequenceFirst } from '../set/first'
-import { EPSILON, EOF } from '../types'
 
 /**
  * Builds the LL(1) parsing table using the grammar and its First/Follow sets.
@@ -30,7 +29,7 @@ export function buildLL1Table(grammar: Grammar, first: GrammarSet, follow: Gramm
       }
     }
 
-    // 2. 如果 ε 在 First(α) 中，对 Follow(A) 中的每个 b，把 A -> α 加入 M[A, b]
+    // 2. 如果 @ 在 First(α) 中，对 Follow(A) 中的每个 b，把 A -> α 加入 M[A, b]
     if (firstAlpha.includes(EPSILON)) {
       for (const b of follow[A]) {
         if (table[A][b]) throw new Error(`LL(1) Conflict on [${A}, ${b}]`)

@@ -1,8 +1,7 @@
 import { describe, it, expect } from 'bun:test'
 import { computeFollow } from '@/ll1/set/follow'
 import { computeFirst } from '@/ll1/set/first'
-import { Grammar } from '@repo/shared-types'
-import { EPSILON, EOF } from '@/ll1/types'
+import { EOF, EPSILON, Grammar } from '@repo/shared-types'
 
 describe('Follow Set Computation', () => {
   it('should compute follow sets correctly', () => {

@@ -1,7 +1,6 @@
 import { describe, it, expect } from 'bun:test'
 import { eliminateLeftRecursion } from '@/ll1/transformer/left-recursion'
-import { Grammar } from '@repo/shared-types'
-import { EPSILON } from '@/ll1/types'
+import { EPSILON, Grammar } from '@repo/shared-types'
 
 describe('Left Recursion Elimination', () => {
   it('should eliminate direct left recursion', () => {

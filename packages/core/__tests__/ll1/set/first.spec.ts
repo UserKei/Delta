@@ -1,7 +1,6 @@
 import { describe, it, expect } from 'bun:test'
 import { computeFirst, computeSequenceFirst } from '@/ll1/set/first'
-import { Grammar } from '@repo/shared-types'
-import { EPSILON } from '@/ll1/types'
+import { EPSILON, Grammar } from '@repo/shared-types'
 
 describe('First Set Computation', () => {
   it('should compute first sets for simple grammar', () => {

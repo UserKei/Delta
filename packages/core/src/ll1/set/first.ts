@@ -1,5 +1,4 @@
-import { Grammar, GrammarSet } from '@repo/shared-types'
-import { EPSILON } from '../types'
+import { EPSILON, Grammar, GrammarSet } from '@repo/shared-types'
 
 /**
  * Computes the First sets for all non-terminals in a given grammar.

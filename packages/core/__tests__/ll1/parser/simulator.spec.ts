@@ -3,8 +3,7 @@ import { simulateLL1 } from '@/ll1/parser/simulator'
 import { buildLL1Table } from '@/ll1/table/build'
 import { computeFirst } from '@/ll1/set/first'
 import { computeFollow } from '@/ll1/set/follow'
-import { Grammar } from '@repo/shared-types'
-import { EPSILON } from '@/ll1/types'
+import { EPSILON, Grammar } from '@repo/shared-types'
 
 describe('LL(1) Parser Simulator', () => {
   const grammar: Grammar = {
@@ -63,11 +62,11 @@ describe('LL(1) Parser Simulator', () => {
     const follow = computeFollow(grammar, first)
     const table = buildLL1Table(grammar, first, follow)
 
-    // Using input 'a' to force the use of A -> ε (since Follow(A) contains EOF)
+    // Using input 'a' to force the use of A -> @ (since Follow(A) contains EOF)
     const steps = simulateLL1(table, grammar.startSymbol, 'a')
 
-    // Find the step where A -> ε is output
-    const epsStep = steps.find(s => s.action === 'Output A -> ε')
+    // Find the step where A -> @ is output
+    const epsStep = steps.find(s => s.action === 'Output A -> @')
     expect(epsStep).toBeDefined()
     expect(epsStep!.pushSymbols).toEqual([EPSILON])
   })

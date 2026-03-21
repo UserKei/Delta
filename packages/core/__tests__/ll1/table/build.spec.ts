@@ -2,8 +2,7 @@ import { describe, it, expect } from 'bun:test'
 import { buildLL1Table } from '@/ll1/table/build'
 import { computeFirst } from '@/ll1/set/first'
 import { computeFollow } from '@/ll1/set/follow'
-import { Grammar } from '@repo/shared-types'
-import { EPSILON, EOF } from '@/ll1/types'
+import { EOF, EPSILON, Grammar } from '@repo/shared-types'
 
 describe('LL(1) Table Construction', () => {
   it('should build table for valid LL(1) grammar', () => {

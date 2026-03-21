@@ -1,5 +1,4 @@
-import { LL1Table, LL1ParserStep, Production } from '@repo/shared-types'
-import { EOF, EPSILON } from '../types'
+import { EOF, EPSILON, LL1Table, LL1ParserStep, Production } from '@repo/shared-types'
 
 /**
  * Simulates LL(1) parsing for a given input string and generates a step-by-step trace.
@@ -58,7 +57,7 @@ export function simulateLL1(table: LL1Table, startSymbol: string, input: string)
 
       currentStep.popSymbol = stack.pop() // 弹出非终结符
 
-      // 压入右部 (逆序), ε 不压栈
+      // 压入右部 (逆序), @ 不压栈
       if (prod.right[0] !== EPSILON) {
         const toPush = [...prod.right].reverse()
         stack.push(...toPush)
