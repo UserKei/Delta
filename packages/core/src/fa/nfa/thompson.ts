@@ -1,13 +1,6 @@
-import { EPSILON, FAEdge, FANode, FiniteAutomata, AutomatonType } from '@repo/shared-types'
+import { EPSILON, FiniteAutomata, AutomatonType, Fragment } from '@repo/shared-types'
 import { toPostfix } from '../regex/parser'
 import { createEdge, createNode } from '../graph'
-
-interface Fragment {
-  start: FANode
-  end: FANode
-  nodes: FANode[]
-  edges: FAEdge[]
-}
 
 /**
  * Thompson's Construction Algorithm.
