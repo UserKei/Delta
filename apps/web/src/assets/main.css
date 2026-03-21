@@ -3,6 +3,7 @@
 @import '@catppuccin/tailwindcss/mocha.css';
 @source '../../../../packages/fa-module/src';
 @source '../../../../packages/ll1-module/src';
+@source '../../../../packages/lr-module/src';
 
 @theme {
   --font-sans: 'Manrope', 'Segoe UI', sans-serif;

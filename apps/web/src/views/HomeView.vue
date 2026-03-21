@@ -25,6 +25,12 @@
           >
             Open LL1 Judge
           </RouterLink>
+          <RouterLink
+            to="/lr"
+            class="rounded-full border border-slate-300 px-6 py-3 text-sm font-semibold text-slate-700 transition hover:border-slate-950 hover:text-slate-950"
+          >
+            Open LR Judge
+          </RouterLink>
         </div>
       </div>
 
@@ -44,6 +50,9 @@
             class="rounded-3xl bg-emerald-50 p-5 text-sm text-emerald-900 ring-1 ring-emerald-200"
           >
             LL(1) is now live as a second rough module with grammar, set, table, and trace steps.
+          </div>
+          <div class="rounded-3xl bg-amber-50 p-5 text-sm text-amber-900 ring-1 ring-amber-200">
+            LR now has a rough shared shell for LR(0) and SLR(1), with mode-aware table checking.
           </div>
         </div>
       </div>

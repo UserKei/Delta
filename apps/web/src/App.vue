@@ -27,6 +27,12 @@
           >
             LL1 Judge
           </RouterLink>
+          <RouterLink
+            to="/lr"
+            class="rounded-full px-4 py-2 text-slate-600 transition hover:bg-slate-900 hover:text-white"
+          >
+            LR Judge
+          </RouterLink>
         </nav>
       </div>
     </header>

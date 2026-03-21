@@ -1,4 +1,11 @@
 // LR 项目定义
+import type { Grammar } from './grammar.js'
+
+export enum LRMode {
+  LR0 = 'LR0',
+  SLR1 = 'SLR1',
+}
+
 export interface LRItem {
   lhs: string // 产生式左部
   rhs: string[] // 产生式右部
@@ -59,4 +66,57 @@ export interface LRParserStep {
   popCount: number // 规约时弹出的元素个数 (弹出 2 * popCount 个)
   pushSymbol?: string // 规约后压入的新符号
   pushState?: string // 压入的新状态 ID
+}
+
+export enum LRTaskType {
+  GRAMMAR_CHECK = 'GRAMMAR_CHECK',
+  LR_DFA_ISOMORPHISM = 'LR_DFA_ISOMORPHISM',
+  TABLE_CELL_MATCH = 'TABLE_CELL_MATCH',
+  SLR1_TABLE_CHECK = 'SLR1_TABLE_CHECK',
+  TRACE_MATCH = 'TRACE_MATCH',
+}
+
+export interface LRGrammarCheckAnswer {
+  grammar: Grammar
+  augmentedGrammar: Grammar
+}
+
+export interface LRDfaIsomorphismAnswer {
+  grammar: Grammar
+  automaton: LRAutomaton
+}
+
+export interface LRTableCheckAnswer {
+  grammar: Grammar
+  mode: LRMode
+  table: LRTable
+}
+
+export interface LRTraceMatchAnswer {
+  grammar: Grammar
+  mode: LRMode
+  input: string
+  trace: LRParserStep[]
+}
+
+export interface LRJudgeAnswerMap {
+  [LRTaskType.GRAMMAR_CHECK]: LRGrammarCheckAnswer
+  [LRTaskType.LR_DFA_ISOMORPHISM]: LRDfaIsomorphismAnswer
+  [LRTaskType.TABLE_CELL_MATCH]: LRTableCheckAnswer
+  [LRTaskType.SLR1_TABLE_CHECK]: LRTableCheckAnswer
+  [LRTaskType.TRACE_MATCH]: LRTraceMatchAnswer
+}
+
+export type LRJudgeRequest<T extends LRTaskType = LRTaskType> = {
+  [K in T]: {
+    taskType: K
+    answer: LRJudgeAnswerMap[K]
+  }
+}[T]
+
+export interface LRJudgeResult {
+  pass: boolean
+  reasonCode: string
+  message: string
+  diagnostics?: Record<string, unknown>
 }
