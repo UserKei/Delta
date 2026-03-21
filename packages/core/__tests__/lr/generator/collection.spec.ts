@@ -42,4 +42,15 @@ describe('LR Generator > collection', () => {
 
     expect(dfa.transitions.length).toBeGreaterThan(0)
   })
+
+  it('should not add start symbol again if already present', () => {
+    const grammarWithPrime: Grammar = {
+      startSymbol: 'S',
+      nonTerminals: ["S'", 'S'],
+      terminals: ['a'],
+      productions: [{ left: 'S', right: ['a'] }],
+    }
+    const augmented = augmentGrammar(grammarWithPrime)
+    expect(augmented.nonTerminals.filter(n => n === "S'").length).toBe(1)
+  })
 })

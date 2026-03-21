@@ -64,4 +64,50 @@ describe('LR Parser Simulator', () => {
     expect(reduceEpsStep).toBeDefined()
     expect(reduceEpsStep!.popCount).toBe(0)
   })
+
+  it('should handle epsilon productions represented by "@"', () => {
+    const epsGrammar: Grammar = {
+      startSymbol: 'S',
+      nonTerminals: ['S', 'A'],
+      terminals: ['b'],
+      productions: [
+        { left: 'S', right: ['A', 'b'] },
+        { left: 'A', right: [] },
+      ],
+    }
+    const { dfa, augmentedGrammar } = buildCanonicalCollection(epsGrammar)
+    const followSets = {
+      "S'": ['$'],
+      S: ['b', '$'],
+      A: ['b'],
+    }
+    const table = buildTable(dfa, augmentedGrammar, 'SLR1', followSets)
+
+    // Mutate the augmented grammar to use '@' for epsilon before simulation
+    const aEpsProd = augmentedGrammar.productions.find(p => p.left === 'A' && p.right.length === 0)
+    if (aEpsProd) {
+      aEpsProd.right = ['@']
+    }
+
+    const steps = simulateLR(table, augmentedGrammar, 'b')
+
+    const lastStep = steps[steps.length - 1]
+    expect(lastStep.action).toBe('Accept')
+
+    const reduceEpsStep = steps.find(s => s.action.includes('Reduce A -> @'))
+    expect(reduceEpsStep).toBeDefined()
+    expect(reduceEpsStep!.popCount).toBe(0)
+  })
+
+  it('should report Goto Error if next state is missing', () => {
+    const { dfa, augmentedGrammar } = buildCanonicalCollection(grammar)
+    const table = buildTable(dfa, augmentedGrammar, 'LR0')
+
+    // Find state 0 goto for S and delete it to trigger Goto Error
+    table.goto['0']['S'] = undefined as any
+
+    const steps = simulateLR(table, augmentedGrammar, 'a a b')
+    const lastStep = steps[steps.length - 1]
+    expect(lastStep.action).toContain('Goto Error')
+  })
 })

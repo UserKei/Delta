@@ -32,4 +32,20 @@ describe('LR Engine > closure', () => {
     expect(result).toHaveLength(1)
     expect(getItemKey(result[0])).toBe('A|b|1')
   })
+
+  it('should handle left-recursive grammar in closure', () => {
+    const lrGrammar: Grammar = {
+      startSymbol: 'S',
+      nonTerminals: ['S', 'A'],
+      terminals: ['a', 'b'],
+      productions: [
+        { left: 'S', right: ['A'] },
+        { left: 'A', right: ['A', 'a'] },
+        { left: 'A', right: ['b'] },
+      ],
+    }
+    const initItems: LRItem[] = [{ lhs: 'S', rhs: ['A'], dotPosition: 0 }]
+    const result = closure(initItems, lrGrammar)
+    expect(result).toHaveLength(3)
+  })
 })
