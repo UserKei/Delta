@@ -83,4 +83,20 @@ describe('DFA Minimization (Hopcroft Algorithm)', () => {
     // So the partitions should be {q1}, {q0}, {q2}.
     expect(minDFA.nodes.length).toBe(3)
   })
+
+  it('should handle DFA where all states are end states', () => {
+    const q0 = createNode({ id: 'q0', isStart: true, isEnd: true })
+    const q1 = createNode({ id: 'q1', isStart: false, isEnd: true })
+    const edges = [createEdge('q0', 'q1', 'a'), createEdge('q1', 'q1', 'a')]
+
+    const dfa = createGraph(AutomatonType.DFA, {
+      nodes: [q0, q1],
+      edges,
+      alphabet: ['a'],
+    })
+
+    const minDFA = minimizeDFA(dfa)
+    // q0 and q1 are equivalent because they both go to q1 on 'a' and are both end states
+    expect(minDFA.nodes.length).toBe(1)
+  })
 })

@@ -19,9 +19,9 @@ describe('FA Graph', () => {
     expect(node.isEnd).toBe(true)
   })
 
-  it('should create an edge', () => {
-    const edge = createEdge('q0', 'q1', 'a')
-    expect(edge.id).toBeDefined()
+  it('should create an edge with a specific id', () => {
+    const edge = createEdge('q0', 'q1', 'a', 'e1')
+    expect(edge.id).toBe('e1')
     expect(edge.source).toBe('q0')
     expect(edge.target).toBe('q1')
     expect(edge.label).toBe('a')

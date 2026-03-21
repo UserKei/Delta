@@ -57,4 +57,27 @@ describe('Edge List Parser', () => {
     expect(nfa.nodes).toHaveLength(2)
     expect(nfa.edges).toHaveLength(2)
   })
+
+  it('should handle purely empty or whitespace lines', () => {
+    const input = `
+      
+      \t
+      
+    `
+    const nfa = parseEdgeList(input)
+    expect(nfa.nodes).toHaveLength(0)
+    expect(nfa.edges).toHaveLength(0)
+  })
+
+  it('should automatically register nodes from edges before S/E declarations', () => {
+    const input = `
+      q0 q1 a
+      start q0
+      end q1
+    `
+    const nfa = parseEdgeList(input)
+    expect(nfa.nodes).toHaveLength(2)
+    expect(nfa.nodes.find(n => n.id === 'q0')?.isStart).toBe(true)
+    expect(nfa.nodes.find(n => n.id === 'q1')?.isEnd).toBe(true)
+  })
 })

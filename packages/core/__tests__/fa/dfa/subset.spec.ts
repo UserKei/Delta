@@ -57,4 +57,21 @@ describe('Subset Construction (NFA -> DFA)', () => {
     }
     expect(() => subsetConstruction(nfa)).toThrow('NFA has no start node')
   })
+
+  it('should skip dead states in subset construction', () => {
+    // q0 -a-> q1
+    // alphabet is [a, b], but there's no b transition from q0 or q1
+    const nfa = {
+      type: AutomatonType.NFA,
+      nodes: [
+        { id: 'q0', isStart: true, isEnd: false },
+        { id: 'q1', isStart: false, isEnd: true },
+      ],
+      edges: [{ source: 'q0', target: 'q1', label: 'a' }],
+      alphabet: ['a', 'b'],
+    } as any
+
+    const dfa = subsetConstruction(nfa)
+    expect(dfa.edges.some(e => e.label === 'b')).toBe(false)
+  })
 })

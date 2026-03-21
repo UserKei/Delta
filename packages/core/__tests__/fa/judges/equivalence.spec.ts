@@ -71,4 +71,16 @@ describe('FA Equivalence Judge', () => {
     expect(result.equal).toBe(false)
     expect(result.counterExample).toBe('Too long')
   })
+
+  it('should handle automata with different alphabets', () => {
+    // nfa1 accepts 'a'
+    const nfa1 = thompson('a')
+    // nfa2 accepts 'b'
+    const nfa2 = thompson('b')
+
+    const result = checkEquivalence(nfa1, nfa2)
+    expect(result.equal).toBe(false)
+    // alphabet will be ['a', 'b']. 'a' or 'b' will be counter-example
+    expect(result.counterExample).toBeDefined()
+  })
 })
