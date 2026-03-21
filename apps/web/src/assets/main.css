@@ -1,35 +1,47 @@
-@import './base.css';
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+@import 'tailwindcss';
+@import '@catppuccin/tailwindcss/mocha.css';
+@source '../../../../packages/fa-module/src';
+
+@theme {
+  --font-sans: 'Manrope', 'Segoe UI', sans-serif;
+  --font-display: 'Fraunces', 'Georgia', serif;
+  --font-mono: 'IBM Plex Mono', 'SFMono-Regular', monospace;
+}
+
+:root {
+  --fa-grid-light:
+    radial-gradient(circle at 10% 20%, color-mix(in oklab, var(--ctp-latte-blue) 16%, transparent), transparent 28%),
+    radial-gradient(circle at 88% 12%, color-mix(in oklab, var(--ctp-latte-mauve) 18%, transparent), transparent 26%),
+    linear-gradient(180deg, color-mix(in oklab, var(--ctp-latte-sapphire) 10%, transparent), transparent 22%);
+  --fa-grid-dark:
+    radial-gradient(circle at 12% 14%, color-mix(in oklab, var(--ctp-mocha-lavender) 26%, transparent), transparent 30%),
+    radial-gradient(circle at 88% 12%, color-mix(in oklab, var(--ctp-mocha-teal) 22%, transparent), transparent 28%),
+    linear-gradient(180deg, color-mix(in oklab, var(--ctp-mocha-surface0) 76%, transparent), transparent 25%);
+}
+
+@layer base {
+  * {
+    @apply outline-none;
+  }
+
+  body {
+    @apply bg-ctp-base text-ctp-text font-sans antialiased;
+  }
+}
+
+body {
+  background-color: var(--ctp-latte-base);
+  color: var(--ctp-latte-text);
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: var(--ctp-mocha-base);
+    color: var(--ctp-mocha-text);
+  }
+}
 
 #app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  font-weight: normal;
-}
-
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-  padding: 3px;
-}
-
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
-}
-
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
-
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
+  min-height: 100vh;
 }
