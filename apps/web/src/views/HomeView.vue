@@ -9,8 +9,8 @@
           Build and judge finite automata step by step.
         </h1>
         <p class="max-w-2xl text-lg text-slate-600">
-          This workspace now includes the first FA module flow: regex equivalence checking and
-          Thompson NFA structure validation.
+          This workspace now includes rough teaching modules for finite automata and LL(1)
+          predictive parsing, with the same package-oriented shell.
         </p>
         <div class="flex flex-wrap gap-4">
           <RouterLink
@@ -20,10 +20,10 @@
             Open FA Judge
           </RouterLink>
           <RouterLink
-            to="/about"
+            to="/ll1"
             class="rounded-full border border-slate-300 px-6 py-3 text-sm font-semibold text-slate-700 transition hover:border-slate-950 hover:text-slate-950"
           >
-            About
+            Open LL1 Judge
           </RouterLink>
         </div>
       </div>
@@ -43,8 +43,7 @@
           <div
             class="rounded-3xl bg-emerald-50 p-5 text-sm text-emerald-900 ring-1 ring-emerald-200"
           >
-            V1 intentionally stops at Step 2 so the UI, graph workflow, and judge protocol stay
-            tight.
+            LL(1) is now live as a second rough module with grammar, set, table, and trace steps.
           </div>
         </div>
       </div>

@@ -21,6 +21,12 @@
           >
             FA Judge
           </RouterLink>
+          <RouterLink
+            to="/ll1"
+            class="rounded-full px-4 py-2 text-slate-600 transition hover:bg-slate-900 hover:text-white"
+          >
+            LL1 Judge
+          </RouterLink>
         </nav>
       </div>
     </header>

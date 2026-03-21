@@ -14,6 +14,9 @@ export default defineConfig({
       '@repo/fa-judge': fileURLToPath(
         new URL('../../packages/fa-judge/dist/index.js', import.meta.url),
       ),
+      '@repo/ll1-judge': fileURLToPath(
+        new URL('../../packages/ll1-judge/dist/index.js', import.meta.url),
+      ),
       '@repo/shared-types': fileURLToPath(
         new URL('../../packages/shared-types/dist/index.js', import.meta.url),
       ),

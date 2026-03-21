@@ -19,6 +19,7 @@
   "dependencies": {
     "@repo/fa-module": "workspace:*",
     "@repo/fa-judge": "workspace:*",
+    "@repo/ll1-module": "workspace:*",
     "@repo/shared-types": "workspace:*",
     "axios": "^1.13.2",
     "cytoscape": "^3.33.1",

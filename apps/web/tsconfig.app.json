@@ -8,6 +8,7 @@
     "paths": {
       "@/*": ["./src/*"],
       "@repo/fa-judge": ["../../packages/fa-judge/dist/index.d.ts"],
+      "@repo/ll1-judge": ["../../packages/ll1-judge/dist/index.d.ts"],
       "@repo/shared-types": ["../../packages/shared-types/dist/index.d.ts"]
     }
   }
