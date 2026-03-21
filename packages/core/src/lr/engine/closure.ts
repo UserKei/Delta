@@ -1,5 +1,5 @@
 import { Grammar, LRItem } from '@repo/shared-types'
-import { getItemKey } from '../types'
+import { getItemKey } from '../utils'
 
 /**
  * Computes the LR(0) closure of a set of items.

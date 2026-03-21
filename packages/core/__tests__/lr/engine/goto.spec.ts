@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'bun:test'
 import { Grammar, LRItem } from '@repo/shared-types'
 import { goto } from '../../../src/lr/engine/goto'
-import { getItemKey } from '../../../src/lr/types'
+import { getItemKey } from '../../../src/lr/utils'
 
 const grammar: Grammar = {
   startSymbol: 'S',

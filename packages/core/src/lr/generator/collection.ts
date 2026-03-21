@@ -2,7 +2,7 @@ import { Grammar, LRState, LRAutomaton, LRItem } from '@repo/shared-types'
 import { cloneDeep } from 'lodash-es'
 import { closure } from '../engine/closure'
 import { goto } from '../engine/goto'
-import { getItemKey } from '../types'
+import { getItemKey } from '../utils'
 
 /**
  * Augments the grammar by adding a new start symbol and a single production

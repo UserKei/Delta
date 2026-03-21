@@ -1,9 +1,10 @@
 import { describe, it, expect } from 'bun:test'
-import { DOT, getItemKey } from '../../src/lr/types'
+import { LR_DISPLAY_DOT } from '@repo/shared-types'
+import { getItemKey } from '../../src/lr/utils'
 
 describe('LR Types', () => {
-  it('should provide DOT constant', () => {
-    expect(DOT).toBe('•')
+  it('should provide LR display dot constant', () => {
+    expect(LR_DISPLAY_DOT).toBe('•')
   })
 
   it('should format item key correctly', () => {

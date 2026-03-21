@@ -1,7 +1,5 @@
 import { LRItem } from '@repo/shared-types'
 
-export const DOT = '•' // 点号标记 (仅用于调试打印，实际逻辑用 dotPosition)
-
 /**
  * Generates a unique string key for an LR item, used for deduplication in Sets.
  *
