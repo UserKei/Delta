@@ -1,4 +1,4 @@
-import { FiniteAutomata, AutomatonType } from '@repo/shared-types'
+import { FAEdge, FANode, FiniteAutomata, AutomatonType } from '@repo/shared-types'
 import { createNode, createEdge } from '../graph'
 import { groupBy, values } from 'lodash-es'
 
@@ -12,6 +12,50 @@ import { groupBy, values } from 'lodash-es'
  * @returns The minimized equivalent DFA object
  */
 export function minimizeDFA(dfa: FiniteAutomata): FiniteAutomata {
+  const partitions = buildHopcroftPartitions(dfa)
+
+  // 2. 重建最小化 DFA
+  // 每个 Partition 成为一个新节点
+  const minNodes: FANode[] = []
+  const minEdges: FAEdge[] = []
+  const partitionMap = new Map<string, string>() // OldID -> NewID
+
+  partitions.forEach((group, index) => {
+    const newId = index.toString()
+    group.forEach(oldId => partitionMap.set(oldId, newId))
+
+    // 继承属性 (只要组内有一个是 Start/End，新节点就是)
+    const isStart = group.some(id => dfa.nodes.find(n => n.id === id)?.isStart)
+    const isEnd = group.some(id => dfa.nodes.find(n => n.id === id)?.isEnd)
+
+    // Label 显示合并前的状态 "{q0,q1}"
+    const label = `{${[...group].sort().join(',')}}`
+    minNodes.push(createNode({ id: newId, label, isStart, isEnd }))
+  })
+
+  // 生成边 (只需看每组的第一个代表元素)
+  partitions.forEach((group, index) => {
+    const representative = group[0]
+    const sourceNewId = index.toString()
+
+    for (const char of dfa.alphabet) {
+      const edge = dfa.edges.find(e => e.source === representative && e.label === char)
+      if (edge) {
+        const targetNewId = partitionMap.get(edge.target)!
+        minEdges.push(createEdge(sourceNewId, targetNewId, char))
+      }
+    }
+  })
+
+  return {
+    type: AutomatonType.MIN_DFA,
+    nodes: minNodes,
+    edges: minEdges,
+    alphabet: dfa.alphabet,
+  }
+}
+
+export function buildHopcroftPartitions(dfa: FiniteAutomata): string[][] {
   // 1. 初始划分: 终态集 vs 非终态集
   // P = { {F}, {Q-F} }
   let partitions: string[][] = [
@@ -50,44 +94,5 @@ export function minimizeDFA(dfa: FiniteAutomata): FiniteAutomata {
     }
     partitions = newPartitions
   }
-
-  // 2. 重建最小化 DFA
-  // 每个 Partition 成为一个新节点
-  const minNodes: any[] = []
-  const minEdges: any[] = []
-  const partitionMap = new Map<string, string>() // OldID -> NewID
-
-  partitions.forEach((group, index) => {
-    const newId = index.toString()
-    group.forEach(oldId => partitionMap.set(oldId, newId))
-
-    // 继承属性 (只要组内有一个是 Start/End，新节点就是)
-    const isStart = group.some(id => dfa.nodes.find(n => n.id === id)?.isStart)
-    const isEnd = group.some(id => dfa.nodes.find(n => n.id === id)?.isEnd)
-
-    // Label 显示合并前的状态 "{q0,q1}"
-    const label = `{${group.sort().join(',')}}`
-    minNodes.push(createNode({ id: newId, label, isStart, isEnd }))
-  })
-
-  // 生成边 (只需看每组的第一个代表元素)
-  partitions.forEach((group, index) => {
-    const representative = group[0]
-    const sourceNewId = index.toString()
-
-    for (const char of dfa.alphabet) {
-      const edge = dfa.edges.find(e => e.source === representative && e.label === char)
-      if (edge) {
-        const targetNewId = partitionMap.get(edge.target)!
-        minEdges.push(createEdge(sourceNewId, targetNewId, char))
-      }
-    }
-  })
-
-  return {
-    type: AutomatonType.MIN_DFA,
-    nodes: minNodes,
-    edges: minEdges,
-    alphabet: dfa.alphabet,
-  }
+  return partitions.map(group => [...group].sort())
 }

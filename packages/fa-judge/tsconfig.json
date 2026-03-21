@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "declaration": true,
+    "outDir": "./dist",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "types": ["bun-types"],
+    "paths": {
+      "@repo/shared-types": ["../shared-types/src"],
+      "@repo/core": ["../core/src/index.ts"],
+      "@repo/core/*": ["../core/src/*"],
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["src/**/*", "__tests__/**/*"]
+}
